@@ -582,7 +582,7 @@ def mmtf_to_df(mmtf_obj: MMTFDecoder) -> pd.DataFrame:
             # data["chain_id"].append([mmtf_obj.chain_name_list[ch_idx]])
             data["chain_id"].append([mmtf_obj.chain_name_list[ch_idx]])
             data["model_id"].append(
-                int(np.argwhere(np.array(model_indices) > ch_idx)[0]) + 1
+                int(np.argwhere(np.array(model_indices) > ch_idx)[0][0]) + 1
             )
             data["record_name"].append(record)
             data["insertion"].append(mmtf_obj.ins_code_list[idx])
