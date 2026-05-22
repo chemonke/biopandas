@@ -236,7 +236,11 @@ class PandasMmtf(object):
         indices = []
 
         residue_number_insertion = (
-            tmp["residue_number"].astype(str) + tmp["insertion"]
+            tmp["chain_id"].astype(str)
+            + "_"
+            + tmp["residue_number"].astype(str)
+            + "_"
+            + tmp["insertion"].fillna("")
         )
 
         for num, ind in zip(residue_number_insertion, np.arange(tmp.shape[0])):

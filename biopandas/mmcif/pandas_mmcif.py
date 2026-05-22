@@ -430,7 +430,11 @@ class PandasMmcif:
         indices = []
 
         residue_number_insertion = (
-            tmp[residue_number_col].astype(str) + tmp["pdbx_PDB_ins_code"]
+            tmp[chain_col].astype(str)
+            + "_"
+            + tmp[residue_number_col].astype(str)
+            + "_"
+            + tmp["pdbx_PDB_ins_code"].fillna("")
         )
 
         for num, ind in zip(residue_number_insertion, np.arange(tmp.shape[0])):

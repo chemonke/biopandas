@@ -606,7 +606,13 @@ class PandasPdb(object):
         cmp = "placeholder"
         indices = []
 
-        residue_number_insertion = tmp["residue_number"].astype(str) + tmp["insertion"]
+        residue_number_insertion = (
+            tmp["chain_id"].astype(str)
+            + "_"
+            + tmp["residue_number"].astype(str)
+            + "_"
+            + tmp["insertion"].fillna("")
+        )
 
         for num, ind in zip(residue_number_insertion, np.arange(tmp.shape[0])):
             if num != cmp:
