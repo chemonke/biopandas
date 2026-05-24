@@ -213,7 +213,9 @@ class PandasMmcif:
         full_df = pd.DataFrame.from_dict(
             data["atom_site"], orient="index"
         ).transpose()
+        mask = full_df.isna()
         full_df = full_df.astype(mmcif_col_types, errors="ignore")
+        full_df = full_df.where(~mask, other=np.nan)
         df["ATOM"] = pd.DataFrame(full_df[full_df.group_PDB == "ATOM"])
         df["HETATM"] = pd.DataFrame(full_df[full_df.group_PDB == "HETATM"])
         try:
