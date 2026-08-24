@@ -1,5 +1,7 @@
 build: false
 
+image: Visual Studio 2019
+
 environment:
   MAMBA_ROOT_PREFIX: C:\micromamba
   matrix:
@@ -13,7 +15,11 @@ init:
   - ECHO %PYTHON_VERSION%
 
 install:
-  - ps: Invoke-WebRequest -Uri "https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-win-64.exe" -OutFile "C:\Windows\micromamba.exe"
+  - ps: |
+      $ProgressPreference = 'SilentlyContinue'
+      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+      Invoke-WebRequest -Uri "https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-win-64.exe" -OutFile "$env:USERPROFILE\micromamba.exe" -UseBasicParsing
+  - set PATH=%USERPROFILE%;%PATH%
   - micromamba --version
   - micromamba create -q -y -n test-environment --channel=conda-forge mmtf-python numpy scipy pandas pytest looseversion importlib_resources python=%PYTHON_VERSION%
 
